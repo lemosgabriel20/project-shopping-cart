@@ -1,8 +1,8 @@
-const fetchProduct = () => {
+export const fetchProduct = () => {
   // seu código aqui
 };
 
-const fetchProductsList = async (product) => {
+export const fetchProductsList = async (product) => {
   try {
     const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
     const data = await response.json();
@@ -11,5 +11,3 @@ const fetchProductsList = async (product) => {
     throw new Error('Termo de busca não informado');
   }
 };
-
-export { fetchProduct, fetchProductsList };
