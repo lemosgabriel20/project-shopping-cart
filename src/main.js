@@ -1,4 +1,4 @@
-import { saveCartID } from './helpers/cartFunctions';
+import { getSavedCartIDs, saveCartID } from './helpers/cartFunctions';
 import { searchCep } from './helpers/cepFunctions';
 import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
 import { createCartProductElement, createProductElement } from './helpers/shopFunctions';
@@ -16,6 +16,16 @@ error.style.color = 'red';
 error.classList.add('error');
 
 window.onload = async () => {
+  const cartSavedIds = getSavedCartIDs();
+  if (cartSavedIds.length > 0) {
+    Promise.all(cartSavedIds.map((item) => fetchProduct(item)))
+      .then((data) => {
+        data.forEach((product) => {
+          const element = createCartProductElement(product);
+          document.querySelector('.cart__products').appendChild(element);
+        });
+      });
+  }
   const container = document.querySelector('.products');
   container.appendChild(loading);
   fetchProductsList('computador')
