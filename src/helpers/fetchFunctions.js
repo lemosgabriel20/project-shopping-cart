@@ -3,11 +3,10 @@ export const fetchProduct = () => {
 };
 
 export const fetchProductsList = async (product) => {
-  try {
-    const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
-    const data = await response.json();
-    return data.results;
-  } catch (error) {
+  if (product === undefined) {
     throw new Error('Termo de busca não informado');
   }
+  const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
+  const data = await response.json();
+  return data.results;
 };
