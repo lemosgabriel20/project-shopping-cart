@@ -14,7 +14,6 @@ error.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
 error.style.color = 'red';
 error.classList.add('error');
 
-const loop = true;
 window.onload = async () => {
   const container = document.querySelector('.products');
   container.appendChild(loading);
