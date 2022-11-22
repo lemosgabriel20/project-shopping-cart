@@ -25,6 +25,4 @@ describe('Teste a função fetchProductsList', () => {
   it('fetchProductsList não recebe argumentos e retorna um erro', () => {
     return expect(fetchProductsList()).rejects.toThrow('Termo de busca não informado');
   });
-  // it('...', () => {
-  // });
 });
