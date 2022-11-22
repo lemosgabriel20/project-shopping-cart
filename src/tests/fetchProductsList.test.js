@@ -1,6 +1,7 @@
 import './mocks/fetchSimulator';
 import { fetchProductsList } from '../helpers/fetchFunctions';
 import computadorSearch from './mocks/search';
+import fetchSimulator from './mocks/fetchSimulator';
 
 // implemente seus testes aqui
 describe('Teste a função fetchProductsList', () => {
@@ -10,12 +11,15 @@ describe('Teste a função fetchProductsList', () => {
 
   it('fetch é chamado ao executar fetchProductsList', async () => {
     return await fetchProductsList('computador').then(data => {
-      expect(typeof data).toBe('object');
+      expect(fetch).toBeCalled();
     });
   });
 
-  it('fetch é chamado com o endpoint correto ao executar fetchProductsList', () => {
-    return expect(fetchProductsList('computador')).resolves.toBe(computadorSearch)
+  it('fetch é chamado com o endpoint correto ao executar fetchProductsList', async () => {
+    return await fetchProductsList('computador').then(data => {
+      const ENDPOINT = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+      expect(fetch).toHaveBeenCalledWith(ENDPOINT);
+    });
   });
 
   it('fetchProductsList não recebe argumentos e retorna um erro', () => {
