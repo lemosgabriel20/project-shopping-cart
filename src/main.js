@@ -1,6 +1,7 @@
+import { saveCartID } from './helpers/cartFunctions';
 import { searchCep } from './helpers/cepFunctions';
-import { fetchProductsList } from './helpers/fetchFunctions';
-import { createProductElement } from './helpers/shopFunctions';
+import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
+import { createCartProductElement, createProductElement } from './helpers/shopFunctions';
 import './style.css';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
@@ -21,7 +22,17 @@ window.onload = async () => {
     .then((products) => {
       container.removeChild(loading);
       products.forEach((product) => {
-        document.querySelector('.products').appendChild(createProductElement(product));
+        const card = createProductElement(product);
+        document.querySelector('.products').appendChild(card);
+        const btn = card.querySelector('.product__add');
+        btn.addEventListener('click', () => {
+          saveCartID(product.id);
+          fetchProduct(product.id)
+            .then((data) => {
+              const element = createCartProductElement(data);
+              document.querySelector('.cart__products').appendChild(element);
+            });
+        });
       });
     })
     .catch(() => {
